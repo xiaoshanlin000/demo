@@ -8,4 +8,5 @@ mvn package <br/>
 cd target<br/>
 chmod a+x *.sh<br/>
 ./start.sh<br/>
-
+在浏览器地址中输入:<br/>
+http://localhost:21121/shanlin/demo/register.action?req={"head":{"username":"test"},"password":"123456"}
