@@ -6,7 +6,6 @@ server 目录是服务端<br/>
 cd ./server <br/>
 mvn package <br/>
 cd target<br/>
-chmod a+x start.sh<br/>
-chmod a+x stop.sh<br/>
+chmod a+x *.sh<br/>
 ./start.sh<br/>
 
