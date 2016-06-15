@@ -6,7 +6,11 @@ server 目录是服务端<br/>
 cd ./server <br/>
 mvn package <br/>
 cd target<br/>
+1):<br/>
 chmod a+x *.sh<br/>
 ./start.sh<br/>
+2):<br/>
+java -jar demo.jar<br/>
+
 在浏览器地址中输入:<br/>
 http://localhost:21121/shanlin/demo/register.action?req={"head":{"username":"test"},"password":"123456"}
