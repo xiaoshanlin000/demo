@@ -10,7 +10,7 @@ public enum ErrorCode {
 
     SUCCESS("0", "成功"),
     ALREADY_REGISTERED("1", "该用户已经注册"),
-    NOT_SUPPORT("2", "服务未支持"),
+    NOT_SUPPORT("2", "url未支持"),
     PARAMETER_ERROR("3", "请求参数错误"),
     SERVICE_ERROR("4", "服务器异常"),
     TOKEN_ERROR("5", "token 错误"),

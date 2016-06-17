@@ -6,6 +6,8 @@ import com.shanlin.demo.database.repository.UserRepository;
 import com.shanlin.demo.exceptions.ResponseException;
 import com.shanlin.demo.request.entry.RequestBaseEntry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,8 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public abstract class CheckTokenHandler<T extends RequestBaseEntry> extends AbstractHandler<T> {
 
-    private static final long  TIME_OUT = 30 * 60 *1000;
 
+    @Value("${token.timeout}")
+    private long timeOut;
     @Autowired
     protected UserRepository userRepository;
     protected User user;
@@ -28,7 +31,7 @@ public abstract class CheckTokenHandler<T extends RequestBaseEntry> extends Abst
                 throw new ResponseException(ErrorCode.TOKEN_ERROR);
             }
             long time = System.currentTimeMillis() - user.getCreateTokenTime().getTime();
-            if (time >  TIME_OUT){
+            if (time >  timeOut * 60 * 1000){
                 throw new ResponseException(ErrorCode.TOKEN_TIME_OUT);
             }
         }

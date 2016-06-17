@@ -162,7 +162,6 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-
             <!-- 打包source文件为jar文件 -->
             <plugin>
                 <artifactId>maven-source-plugin</artifactId>
@@ -177,6 +176,43 @@
                             <goal>jar</goal>
                         </goals>
                     </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.5.0</version>
+                <executions>
+                    <execution>
+                        <id>script-chmod</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>chmod</executable>
+                            <arguments>
+                                <argument>a+x</argument>
+                                <argument>${project.build.directory}/start.sh</argument>
+                                <argument>${project.build.directory}/stop.sh</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!--<execution>-->
+                        <!--<id>script-sh-start</id>-->
+                        <!--<phase>install</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>exec</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<executable>sh</executable>-->
+                            <!--<arguments>-->
+                                <!--<argument>${project.build.directory}/start.sh</argument>-->
+                                <!--<argument>${project.build.directory}/${name}.jar</argument>-->
+                            <!--</arguments>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
         </plugins>

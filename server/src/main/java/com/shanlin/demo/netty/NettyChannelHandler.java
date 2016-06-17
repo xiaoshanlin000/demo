@@ -52,13 +52,14 @@ public class NettyChannelHandler extends SimpleChannelInboundHandler {
                 }
                 QueryStringDecoder uri = new QueryStringDecoder(req.uri());
                 String url = uri.path();
-                if (url.equals("/favicon.ico")) {
+                if ("/favicon.ico".equals(url)) {
                     return;
                 }
                 HashMap<String, String> parameters = HttpRequestUtil.parseHttpRequest(req); // 参数
                 String json = parameters.get("req");
-                if (json == null || json.length() == 0 || !json.startsWith("{"))
-                    throw new ResponseException(PARAMETER_ERROR);
+                if (json == null || json.length() == 0 || !json.startsWith("{")) {
+                    json = "{}";
+                }
                 IHttpFactory factory = HttpFactoryManager.getIHttpFactory(url);
                 RequestBaseEntry entry = JSON.parseObject(json, factory.parameterClass());
                 if (factory.httpHandler().checkRequest(entry)) { // 验证请求参数
@@ -77,7 +78,8 @@ public class NettyChannelHandler extends SimpleChannelInboundHandler {
             } finally {
                 if (responseBaseEntry != null) {
                     boolean keepAlive = HttpHeaderUtil.isKeepAlive(req);
-                    FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(JSON.toJSONString(responseBaseEntry).getBytes()));
+                    String res = JSON.toJSONString(responseBaseEntry);
+                    FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(res.getBytes("UTF-8")));
                     response.headers().set(CONTENT_TYPE, "text/plain;charset=UTF-8");
                     response.headers().setInt(CONTENT_LENGTH, response.content().readableBytes());
                     if (!keepAlive) {
